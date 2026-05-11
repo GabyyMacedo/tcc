@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gabyber</title>
+  <meta name="description" content="Gabyber: um dispositivo de segurança pessoal para mulheres, apresentado em um site claro, acolhedor e elegante, feito em HTML, CSS e JavaScript." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --text-3xl: clamp(2.5rem, 1rem + 4vw, 5rem);
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+
+      --color-bg: #fffbfd;
+      --color-surface: #fff4f8;
+      --color-surface-2: #ffedf4;
+      --color-surface-offset: #ffdbec;
+      --color-border: rgba(69, 2, 24, 0.12);
+      --color-divider: rgba(69, 2, 24, 0.08);
+
+      --color-text: #450218;
+      --color-text-muted: #6a1a32;
+      --color-text-faint: #9d5a72;
+      --color-text-inverse: #fff8fb;
+
+      --color-primary: #57021e;
+      --color-primary-hover: #450218;
+      --color-primary-soft: #eba8c1;
+      --color-accent: #f46c88;
+      --color-highlight: #ffdbec;
+
+      --radius-sm: 0.5rem;
+      --radius-md: 0.875rem;
+      --radius-lg: 1.25rem;
+      --radius-xl: 1.75rem;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 2px 8px rgba(87, 2, 30, 0.06);
+      --shadow-md: 0 12px 32px rgba(87, 2, 30, 0.12);
+      --shadow-lg: 0 24px 64px rgba(87, 2, 30, 0.16);
+
+      --content-default: 1120px;
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-body: Manrope, Arial, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --color-bg: #210612;
+      --color-surface: #2a0918;
+      --color-surface-2: #341021;
+      --color-surface-offset: #431126;
+      --color-border: rgba(255, 219, 236, 0.14);
+      --color-divider: rgba(255, 219, 236, 0.08);
+      --color-text: #ffedf4;
+      --color-text-muted: #f1bfd0;
+      --color-text-faint: #d78ca7;
+      --color-text-inverse: #450218;
+      --color-primary: #f46c88;
+      --color-primary-hover: #eba8c1;
+      --color-primary-soft: #57021e;
+      --color-accent: #ffdbec;
+      --color-highlight: #5a2037;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.22);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.28);
+      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.34);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--color-text);
+      background:
+        radial-gradient(circle at top right, rgba(244,108,136,0.16), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(235,168,193,0.18), transparent 26%),
+        var(--color-bg);
+    }
+    img, svg { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; border: 0; background: none; cursor: pointer; }
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: var(--space-4);
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-full);
+      z-index: 50;
+    }
+    .skip-link:focus { left: var(--space-4); }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--content-default));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: color-mix(in srgb, var(--color-bg) 84%, transparent);
+      border-bottom: 1px solid var(--color-divider);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      min-height: 84px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .brand-mark { width: 42px; height: 42px; color: var(--color-primary); }
+    .brand-name { font-size: var(--text-sm); text-transform: uppercase; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+    }
+    .nav a {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      position: relative;
+    }
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.35rem;
+      width: 100%;
+      height: 1px;
+      background: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .nav a:hover::after,
+    .nav a:focus-visible::after { transform: scaleX(1); }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .theme-toggle,
+    .menu-toggle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      transition: transform var(--transition), background var(--transition);
+    }
+    .theme-toggle:hover,
+    .menu-toggle:hover {
+      transform: translateY(-2px);
+      background: var(--color-surface-2);
+    }
+    .menu-toggle { display: none; }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: 48px;
+      padding: 0 var(--space-5);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      transition: transform var(--transition), background var(--transition), color var(--transition);
+    }
+    .button-primary {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      box-shadow: var(--shadow-sm);
+    }
+    .button-primary:hover {
+      background: var(--color-primary-hover);
+      transform: translateY(-2px);
+    }
+    .button-secondary {
+      background: transparent;
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+    }
+    .button-secondary:hover { background: var(--color-surface); }
+
+    main section { padding-block: clamp(var(--space-16), 9vw, var(--space-24)); }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: clamp(var(--space-8), 5vw, var(--space-16));
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-full);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: var(--space-5);
+    }
+    h1, h2 {
+      font-family: var(--font-display);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+    }
+    h1 {
+      font-size: clamp(3.2rem, 7vw, 6.4rem);
+      max-width: 8.5ch;
+    }
+    h2 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-5);
+    }
+    .hero p {
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      max-width: 58ch;
+      margin-top: var(--space-5);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-8);
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-10);
+    }
+    .stat {
+      padding: var(--space-4);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .stat strong {
+      display: block;
+      font-size: var(--text-lg);
+      font-family: var(--font-display);
+      margin-bottom: 0.25rem;
+    }
+    .stat span {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    .hero-card {
+      position: relative;
+      padding: var(--space-6);
+      border-radius: 32px;
+      background: linear-gradient(180deg, var(--color-surface), color-mix(in srgb, var(--color-surface) 72%, var(--color-highlight)));
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+      min-height: 560px;
+      display: grid;
+      align-content: space-between;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -10px -20px 20px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(244,108,136,0.24), transparent 60%);
+      pointer-events: none;
+    }
+
+    .phone-shell {
+      margin-inline: auto;
+      width: min(320px, 100%);
+      border-radius: 36px;
+      padding: 12px;
+      background: #5a3d46;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), var(--shadow-md);
+    }
+    .phone-screen {
+      background: linear-gradient(180deg, #fffafc 0%, #f7eef2 100%);
+      border-radius: 28px;
+      padding: var(--space-4);
+      min-height: 470px;
+      display: grid;
+      gap: var(--space-4);
+      position: relative;
+      overflow: hidden;
+    }
+    .phone-screen::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(69, 2, 24, 0.16);
+    }
+    .phone-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #231b1a;
+      font-size: var(--text-xs);
+    }
+    .phone-dynamic {
+      width: 72px;
+      height: 22px;
+      border-radius: 999px;
+      background: #111;
+    }
+    .phone-headline {
+      display: grid;
+      gap: 0.25rem;
+      margin-top: 0.25rem;
+    }
+    .phone-headline h3 {
+      font-size: 2rem;
+      font-family: var(--font-display);
+      line-height: 1;
+    }
+    .phone-headline p {
+      color: #8b8b8b;
+      font-size: 0.85rem;
+    }
+    .phone-feature {
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 18px;
+      padding: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .phone-feature strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.98rem;
+      color: #222;
+    }
+    .phone-feature p {
+      font-size: 0.88rem;
+      color: #6a625f;
+    }
+
+    .app-showcase {
+      padding-top: clamp(4rem, 8vw, 7rem);
+      padding-bottom: clamp(4rem, 8vw, 7rem);
+    }
+    .app-showcase__header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+    }
+    .app-showcase__header h2 {
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 0.95;
+      margin-bottom: 1rem;
+    }
+    .app-showcase__header p {
+      color: var(--color-text-muted);
+      font-size: var(--text-base);
+    }
+    .app-showcase__grid {
+      display: grid;
+      grid-template-columns: 1fr 340px 1fr;
+      grid-template-rows: auto auto;
+      gap: 2rem 2.5rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .app-phone {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .app-phone__shell {
+      width: min(100%, 290px);
+      padding: 10px;
+      border-radius: 42px;
+      background: #5a3d46;
+      box-shadow: 0 30px 70px rgba(69, 2, 24, 0.18);
+    }
+    .app-phone__screen {
+      border-radius: 34px;
+      background: linear-gradient(180deg, #fffafc 0%, #f7eef2 100%);
+      min-height: 560px;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .app-phone__screen::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(69, 2, 24, 0.16);
+    }
+    .app-phone__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: #231b1a;
+      margin-bottom: 1rem;
+    }
+    .app-phone__status {
+      width: 70px;
+      height: 22px;
+      border-radius: 999px;
+      background: #231b1a;
+    }
+    .app-phone__content {
+      display: grid;
+      gap: 1rem;
+      padding-top: 0.5rem;
+    }
+    .app-phone__eyebrow {
+      font-size: 0.8rem;
+      color: #9d5a72;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .app-phone__content h3 {
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+      color: var(--color-primary);
+    }
+    .app-phone__feature {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(69, 2, 24, 0.06);
+      border-radius: 18px;
+      padding: 1rem;
+      box-shadow: 0 10px 30px rgba(69, 2, 24, 0.05);
+    }
+    .app-phone__feature strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.98rem;
+      color: #450218;
+    }
+    .app-phone__feature p {
+      font-size: 0.88rem;
+      color: #6a1a32;
+    }
+
+    .app-card {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      max-width: 290px;
+      padding: 1.25rem;
+      border-radius: 22px;
+      background: #ffffff;
+      border: 1px solid rgba(69, 2, 24, 0.08);
+      box-shadow: 0 14px 40px rgba(69, 2, 24, 0.06);
+    }
+    .app-card h3 {
+      font-size: 1rem;
+      line-height: 1.15;
+      margin-bottom: 0.45rem;
+      color: #450218;
+    }
+    .app-card p {
+      font-size: 0.88rem;
+      color: #6a1a32;
+    }
+    .app-card__icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 34px;
+      background: #ffdbec;
+      color: #57021e;
+      font-size: 1rem;
+    }
+    .app-card--accent {
+      border-color: rgba(192, 125, 117, 0.38);
+    }
+    .app-card--left-top { grid-column: 1; grid-row: 1; justify-self: end; }
+    .app-card--right-top { grid-column: 3; grid-row: 1; justify-self: start; }
+    .app-card--left-bottom { grid-column: 1; grid-row: 2; justify-self: end; }
+    .app-card--right-bottom { grid-column: 3; grid-row: 2; justify-self: start; }
+
+    .section-intro {
+      display: grid;
+      gap: var(--space-4);
+      margin-bottom: var(--space-10);
+      max-width: 72ch;
+    }
+    .section-intro p { color: var(--color-text-muted); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--space-6);
+    }
+    .feature-card {
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+    .feature-card.large {
+      display: grid;
+      gap: var(--space-6);
+      background: linear-gradient(180deg, var(--color-surface), var(--color-surface-2));
+    }
+    .feature-card h3,
+    .story-card h3,
+    .support-card h3 {
+      font-size: var(--text-xl);
+      font-family: var(--font-display);
+      line-height: 1;
+      margin-bottom: var(--space-3);
+    }
+    .feature-card p,
+    .story-card p,
+    .support-card p,
+    .cta-box p {
+      color: var(--color-text-muted);
+    }
+    .soft-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    .soft-list span {
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      background: var(--color-highlight);
+      color: var(--color-primary);
+      border: 1px solid rgba(87, 2, 30, 0.08);
+    }
+    .feature-side {
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    .story-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: var(--space-6);
+      align-items: start;
+    }
+    .quote-panel {
+      padding: var(--space-8);
+      border-radius: 32px;
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      position: sticky;
+      top: 110px;
+      box-shadow: var(--shadow-lg);
+    }
+    .quote-panel p {
+      font-size: var(--text-lg);
+      color: rgba(255,248,251,0.86);
+    }
+    .quote-panel strong {
+      display: block;
+      margin-top: var(--space-6);
+      font-size: var(--text-sm);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .story-stack {
+      display: grid;
+      gap: var(--space-4);
+    }
+    .story-card {
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+    .number-box {
+      padding: var(--space-6);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+    }
+    .number-box strong {
+      display: block;
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-family: var(--font-display);
+      margin-bottom: 0.35rem;
+    }
+    .number-box span { color: var(--color-text-muted); }
+
+    .cta-box {
+      padding: clamp(var(--space-8), 5vw, var(--space-12));
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-6);
+      align-items: center;
+      background: linear-gradient(135deg, var(--color-surface-2), var(--color-highlight));
+      box-shadow: var(--shadow-md);
+      border-radius: 32px;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    .support-card {
+      padding: var(--space-6);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+    .support-card ul {
+      list-style: none;
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+    }
+    .support-card li {
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-divider);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    .site-footer {
+      padding: var(--space-8) 0 var(--space-10);
+      border-top: 1px solid var(--color-divider);
+      color: var(--color-text-muted);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+    [data-reveal].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .features-grid,
+      .story-layout,
+      .cta-box,
+      .app-showcase__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quote-panel { position: static; }
+      .numbers-grid,
+      .support-grid { grid-template-columns: 1fr; }
+      .hero-card { min-height: auto; }
+
+      .app-phone {
+        grid-column: auto;
+        grid-row: auto;
+        order: -1;
+      }
+
+      .app-card {
+        max-width: 100%;
+        justify-self: stretch;
+      }
+
+      .app-card--left-top,
+      .app-card--right-top,
+      .app-card--left-bottom,
+      .app-card--right-bottom {
+        grid-column: auto;
+        grid-row: auto;
+        justify-self: stretch;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        position: absolute;
+        left: 1rem;
+        right: 1rem;
+        top: calc(100% + 0.75rem);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--space-5);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        display: none;
+      }
+      .nav.open { display: flex; }
+      .menu-toggle { display: inline-grid; }
+      .header-actions .button { display: none; }
+      h1 { max-width: 10ch; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+
+      .app-phone__shell { width: min(100%, 250px); }
+      .app-phone__screen { min-height: 500px; }
+      .app-showcase__header h2 { font-size: clamp(1.8rem, 8vw, 2.6rem); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, ::before, ::after { animation: none !important; transition: none !important; }
+      [data-reveal] { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a class="brand" href="#inicio" aria-label="Voltar ao início">
+          <svg class="brand-mark" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <ellipse cx="60" cy="60" rx="40" ry="54" stroke="currentColor" stroke-width="2.4"/>
+            <path d="M77 28c-8-7-18-9-27-6-10 3-16 10-16 19 0 27 40 18 40 39 0 9-8 15-18 15-9 0-17-4-24-11" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M60 41l4 13h14l-11 8 4 13-11-8-11 8 4-13-11-8h14l4-13Z" fill="currentColor"/>
+          </svg>
+          <span class="brand-name">Gabyber</span>
+        </a>
+
+        <nav class="nav" id="menu" aria-label="Principal">
+          <a href="#inicio">Início</a>
+          <a href="#app-showcase">App</a>
+          <a href="#produto">Produto</a>
+          <a href="#contato">Contato</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Alternar tema">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <path d="M12 1v2M12 21v-2M4.22 4.22l1.42 1.42M18.36 18.36l-1.42 1.42M1 12h2M21 12h-2M4.22 19.78l1.42-1.42M18.36 5.64l-1.42 1.42"></path>
+            </svg>
+          </button>
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 6h18M3 12h18M3 18h18"></path>
+            </svg>
+          </button>
+          <a class="button button-primary" href="#contato">Quero conhecer</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="hero-grid">
+          <div data-reveal>
+            <span class="eyebrow">Segurança pessoal com discrição</span>
+            <h1>Gabyber protege sem chamar atenção.</h1>
+            <p>Gabyber é um dispositivo de segurança pessoal pensado para mulheres que querem mais autonomia no dia a dia, com presença discreta, acesso rápido e uma marca sensível, clara e acolhedora.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#app-showcase">Ver seção do app</a>
+              <a class="button button-secondary" href="#produto">Entender o produto</a>
+            </div>
+            <div class="hero-stats" aria-label="Pontos principais do produto">
+              <article class="stat"><strong>Discreto</strong><span>Integrado à rotina sem excesso de exposição.</span></article>
+              <article class="stat"><strong>Rápido</strong><span>Fácil de acessar e acionar.</span></article>
+              <article class="stat"><strong>Confiável</strong><span>Prático para o uso cotidiano.</span></article>
+            </div>
+          </div>
+
+          <div class="hero-card" data-reveal>
+            <div class="phone-shell">
+              <div class="phone-screen">
+                <div class="phone-top">
+                  <span>9:41</span>
+                  <span class="phone-dynamic"></span>
+                </div>
+                <div class="phone-headline">
+                  <span class="eyebrow" style="margin-bottom:0;">Gabyber</span>
+                  <h3>Proteção</h3>
+                  <p>Visual limpo, discreto e direto.</p>
+                </div>
+                <div class="phone-feature">
+                  <strong>Resposta rápida</strong>
+                  <p>Acesso imediato aos recursos mais importantes.</p>
+                </div>
+                <div class="phone-feature">
+                  <strong>Modo discreto</strong>
+                  <p>Interface elegante para uso no cotidiano sem chamar atenção.</p>
+                </div>
+                <div class="phone-feature">
+                  <strong>Organização simples</strong>
+                  <p>Tudo pensado para agir com poucos toques.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-showcase" id="app-showcase">
+      <div class="container">
+        <div class="app-showcase__header" data-reveal>
+          <h2>Sua vida de proteção diária em um só lugar.</h2>
+          <p>No Gabyber, você encontra:</p>
+        </div>
+
+        <div class="app-showcase__grid">
+          <article class="app-card app-card--left-top" data-reveal>
+            <div class="app-card__icon">✦</div>
+            <div>
+              <h3>+ 290 recursos de segurança</h3>
+              <p>Alarmes, atalhos, rotinas e ações rápidas para proteção no dia a dia.</p>
+            </div>
+          </article>
+
+          <article class="app-card app-card--right-top app-card--accent" data-reveal>
+            <div class="app-card__icon">⌁</div>
+            <div>
+              <h3>+ 80 modos de uso</h3>
+              <p>Opções para diferentes situações de deslocamento, rotina e emergência.</p>
+            </div>
+          </article>
+
+          <div class="app-phone" data-reveal>
+            <div class="app-phone__shell">
+              <div class="app-phone__screen">
+                <div class="app-phone__top">
+                  <span>9:41</span>
+                  <span class="app-phone__status"></span>
+                </div>
+
+                <div class="app-phone__content">
+                  <span class="app-phone__eyebrow">Gabyber</span>
+                  <h3>Proteção</h3>
+
+                  <div class="app-phone__feature">
+                    <strong>Resposta rápida</strong>
+                    <p>Acesso imediato aos recursos mais importantes.</p>
+                  </div>
+
+                  <div class="app-phone__feature">
+                    <strong>Modo discreto</strong>
+                    <p>Visual limpo para uso no cotidiano sem chamar atenção.</p>
+                  </div>
+
+                  <div class="app-phone__feature">
+                    <strong>Organização simples</strong>
+                    <p>Tudo pensado para agir com poucos toques.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <article class="app-card app-card--left-bottom" data-reveal>
+            <div class="app-card__icon">✺</div>
+            <div>
+              <h3>Modelos de proteção guiada</h3>
+              <p>Fluxos pensados para acolher, orientar e facilitar a ação.</p>
+            </div>
+          </article>
+
+          <article class="app-card app-card--right-bottom" data-reveal>
+            <div class="app-card__icon">⌂</div>
+            <div>
+              <h3>Conteúdos em um só lugar</h3>
+              <p>Centralização de recursos, instruções e atalhos importantes.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="produto">
+      <div class="container">
+        <div class="section-intro" data-reveal>
+          <span class="eyebrow">Posicionamento</span>
+          <h2>Um site claro, comercial e com identidade própria.</h2>
+          <p>Esta versão retoma a estrutura mais direta e acolhedora que você tinha gostado, mantendo hero forte, blocos bem definidos e leitura rápida.</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card large" data-reveal>
+            <h3>Mensagem central da Gabyber</h3>
+            <p>Gabyber pode se apresentar como uma solução de segurança pessoal para mulheres que buscam mais autonomia em deslocamentos, rotina noturna e situações de vulnerabilidade. A narrativa fala de proteção, liberdade e preparo, sem deixar a comunicação pesada ou excessivamente técnica.</p>
+            <div class="soft-list">
+              <span>proteção discreta</span>
+              <span>autonomia cotidiana</span>
+              <span>resposta imediata</span>
+              <span>identidade elegante</span>
+            </div>
+          </article>
+
+          <div class="feature-side">
+            <article class="feature-card" data-reveal>
+              <h3>Tom de voz</h3>
+              <p>Firme, sensível e protetor, reforçando autonomia e acolhimento em vez de medo puro.</p>
+            </article>
+
+            <article class="feature-card" data-reveal>
+              <h3>Página ideal</h3>
+              <p>Hero, explicação do produto, funcionamento, diferenciais, FAQ e chamada final para contato, compra ou lista de espera.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona">
+      <div class="container">
+        <div class="story-layout">
+          <aside class="quote-panel" data-reveal>
+            <p>Proteção pessoal funciona melhor quando faz parte da vida real, sem atrito, sem ruído e com acesso imediato.</p>
+            <strong>Direção de produto</strong>
+          </aside>
+
+          <div class="story-stack">
+            <article class="story-card" data-reveal>
+              <h3>1. Fácil de carregar</h3>
+              <p>O site trata Gabyber como um objeto portátil e natural na rotina, acompanhando a lógica de dispositivos compactos e fáceis de manter por perto.</p>
+            </article>
+
+            <article class="story-card" data-reveal>
+              <h3>2. Fácil de ativar</h3>
+              <p>Itens de segurança pessoal tendem a comunicar simplicidade de uso em momentos de tensão, com acesso rápido e pouca complexidade.</p>
+            </article>
+
+            <article class="story-card" data-reveal>
+              <h3>3. Fácil de confiar</h3>
+              <p>A combinação de identidade delicada com estrutura direta ajuda a Gabyber a parecer próxima, clara e confiável, sem perder personalidade.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="diferenciais">
+      <div class="container">
+        <div class="section-intro" data-reveal>
+          <span class="eyebrow">Estrutura sugerida</span>
+          <h2>O que a página precisa destacar.</h2>
+          <p>Como a Gabyber apresenta um dispositivo de segurança pessoal para mulheres, a página deve reforçar discrição, usabilidade, portabilidade e sensação de amparo.</p>
+        </div>
+
+        <div class="numbers-grid">
+          <article class="number-box" data-reveal><strong>Produto</strong><span>Mostrar o objeto, sua proposta e o contexto de uso.</span></article>
+          <article class="number-box" data-reveal><strong>Função</strong><span>Explicar como ele age e como é acionado.</span></article>
+          <article class="number-box" data-reveal><strong>Confiança</strong><span>Usar linguagem objetiva, prova social e FAQ.</span></article>
+          <article class="number-box" data-reveal><strong>Conversão</strong><span>Encaminhar para lista, compra, contato ou lançamento.</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="container">
+        <div class="cta-box" data-reveal>
+          <div>
+            <h3>Agora a Gabyber recupera o layout mais claro que você preferia.</h3>
+            <p>Eu mantive a base do design anterior e só acrescentei a identidade da marca de forma sutil, com símbolo no topo, hero ajustado e tom visual mais coerente com a imagem enviada.</p>
+          </div>
+          <a class="button button-primary" href="mailto:contato@gabyber.com">Avançar com o conteúdo final</a>
+        </div>
+
+        <div class="support-grid">
+          <article class="support-card" data-reveal>
+            <h3>O que foi mantido</h3>
+            <ul>
+              <li>Estrutura mais limpa e fácil de entender.</li>
+              <li>Blocos bem definidos e hero direto.</li>
+              <li>Tom comercial mais claro e objetivo.</li>
+            </ul>
+          </article>
+
+          <article class="support-card" data-reveal>
+            <h3>O que foi ajustado</h3>
+            <ul>
+              <li>Nome Gabyber aplicado à marca.</li>
+              <li>Símbolo incorporado de forma leve na interface.</li>
+              <li>Tipografia e cores refinadas sem mudar a base.</li>
+            </ul>
+          </article>
+
+          <article class="support-card" data-reveal>
+            <h3>Próximo passo</h3>
+            <ul>
+              <li>Definir o formato real do dispositivo.</li>
+              <li>Explicar exatamente o que ele faz.</li>
+              <li>Escolher o CTA final da página.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p>Gabyber: segurança pessoal com clareza, delicadeza e presença.</p>
+        <p>Feito em HTML, CSS e JavaScript.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.querySelector('[data-theme-toggle]');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let theme = prefersDark ? 'dark' : 'light';
+
+    root.setAttribute('data-theme', theme);
+
+    function setIcon() {
+      toggle.innerHTML = theme === 'dark'
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v-2M4.22 4.22l1.42 1.42M18.36 18.36l-1.42 1.42M1 12h2M21 12h-2M4.22 19.78l1.42-1.42M18.36 5.64l-1.42 1.42"></path></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 0111.21 3 7 7 0 0021 12.79z"></path></svg>';
+    }
+
+    setIcon();
+
+    toggle.addEventListener('click', () => {
+      theme = theme === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', theme);
+      toggle.setAttribute('aria-label', theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro');
+      setIcon();
+    });
+
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.nav');
+
+    menuButton.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(open));
+    });
+
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

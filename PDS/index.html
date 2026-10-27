@@ -362,6 +362,12 @@
     }
 
 
+    /* Botão de instalação da primeira seção: aparece somente no celular. */
+    .install-mobile {
+      display: none;
+    }
+
+
     main section {
       padding-block: clamp(var(--space-16), 9vw, var(--space-24));
     }
@@ -1088,8 +1094,35 @@
       }
 
 
+      /* O botão "Instalar app" do cabeçalho aparece no celular, em tamanho compacto. */
+      .header-inner {
+        gap: var(--space-2);
+      }
+
+
+      .header-actions {
+        gap: var(--space-2);
+      }
+
+
       .header-actions .button {
-        display: none;
+        min-height: 44px;
+        padding: 0 var(--space-4);
+        font-size: 0.8125rem;
+        white-space: nowrap;
+      }
+
+
+      .theme-toggle,
+      .menu-toggle {
+        width: 40px;
+        height: 40px;
+      }
+
+
+      /* Botão de instalação da primeira seção, visível no celular. */
+      .install-mobile {
+        display: inline-flex;
       }
 
 
@@ -1117,6 +1150,14 @@
 
       .app-showcase__header h2 {
         font-size: clamp(1.8rem, 8vw, 2.6rem);
+      }
+    }
+
+
+    /* Em telas muito estreitas, o nome ao lado da logo é ocultado para o botão caber. */
+    @media (max-width: 380px) {
+      .brand-name {
+        display: none;
       }
     }
 
@@ -1222,6 +1263,8 @@
 
 
         <div class="hero-actions">
+          <!-- Botão de instalação visível apenas no celular. -->
+          <a class="button button-primary install-mobile" href="https://expo.dev/artifacts/eas/S7ke-C9u-pVEd5wlpU-LScNYFbZMWcYenXWWYoVflw4.apk">Instalar app</a>
           <a class="button button-primary" href="#app-showcase">App</a>
           <a class="button button-secondary" href="#produto">Entender o produto</a>
         </div>

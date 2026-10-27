@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Zella — Tela inicial</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      --fonte: Arial, sans-serif;
+      --vinho: #691630;
+      --texto: #53313e;
+      --fundo: #fcf1f5;
+      --rosa-banner: #ecc2cf;
+      --rosa-sos: #da5d88;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      background: transparent;
+    }
+
+    body {
+      font-family: var(--fonte);
+      color: var(--texto);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible {
+      outline: 2px solid var(--vinho);
+      outline-offset: 3px;
+    }
+
+    button:active {
+      filter: brightness(0.94);
+    }
+
+    svg {
+      display: block;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .biblioteca-icones {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .icone {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Área externa do mockup. */
+    .palco {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 0 7px;
+    }
+
+    .area-celular {
+      position: relative;
+      width: min(100%, 375px);
+      aspect-ratio: 375 / 666;
+    }
+
+    .composicao {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 375px;
+      height: 666px;
+      transform-origin: top left;
+    }
+
+    /* Moldura do aparelho. */
+    .celular {
+      position: absolute;
+      top: 0;
+      left: 22px;
+
+      width: 331px;
+      height: 666px;
+      padding: 17px;
+
+      border: 3px solid #626463;
+      border-radius: 51px;
+      background: #2c2e2d;
+
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.12);
+    }
+
+    .botao-lateral {
+      position: absolute;
+      width: 4px;
+      border-radius: 4px;
+      background: #484a49;
+    }
+
+    .botao-lateral--silencio {
+      left: -6px;
+      top: 85px;
+      height: 28px;
+    }
+
+    .botao-lateral--volume {
+      left: -6px;
+      top: 134px;
+      height: 48px;
+    }
+
+    .botao-lateral--energia {
+      right: -6px;
+      top: 149px;
+      height: 80px;
+    }
+
+    .tela {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      isolation: isolate;
+
+      border-radius: 29px;
+      background: var(--fundo);
+    }
+
+    .tela::before,
+    .tela::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+
+      width: 225px;
+      height: 225px;
+
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .tela::before {
+      left: -25px;
+      top: 12px;
+      background: #f8e5ed;
+    }
+
+    .tela::after {
+      right: -70px;
+      top: 292px;
+      background: #f5e0e9;
+    }
+
+    /* Câmera e alto-falante. */
+    .notch {
+      position: absolute;
+      z-index: 8;
+      top: 0;
+      left: 50%;
+
+      width: 165px;
+      height: 23px;
+
+      border-radius: 0 0 16px 16px;
+      background: #2c2e2d;
+
+      transform: translateX(-50%);
+    }
+
+    .alto-falante {
+      position: absolute;
+      left: 58px;
+      top: 5px;
+
+      width: 45px;
+      height: 6px;
+
+      border-radius: 10px;
+      background: #555756;
+    }
+
+    .camera {
+      position: absolute;
+      right: 39px;
+      top: 4px;
+
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+      background: #4c4f4d;
+    }
+
+    .barra-status {
+      position: absolute;
+      z-index: 7;
+      top: 8px;
+      right: 17px;
+      left: 19px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    /* Conteúdo interno. */
+    .conteudo {
+      position: absolute;
+      inset: 48px 0 59px;
+
+      padding: 7px 18px 20px;
+
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
+
+    .conteudo::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cabecalho {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 42px;
+    }
+
+    .marca-nome {
+      color: var(--vinho);
+      font-size: 27px;
+      font-weight: 900;
+      line-height: normal;
+      letter-spacing: -1.3px;
+    }
+
+    .marca-brilho {
+      color: #be6b8b;
+      font-size: 20px;
+    }
+
+    .marca-subtitulo {
+      margin-top: 3px;
+      font-size: 8px;
+    }
+
+    .botao-favoritos {
+      display: grid;
+      place-items: center;
+
+      width: 36px;
+      height: 36px;
+
+      border: 1px solid #f0e4e9;
+      border-radius: 50%;
+      background: #fffdfd;
+      color: #703149;
+
+      font-size: 27px;
+    }
+
+    .saudacao {
+      margin-top: 23px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 18px;
+    }
+
+    /* Cartão com a ilustração enviada. */
+    .banner {
+      position: relative;
+
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      height: 75px;
+      margin-top: 15px;
+      padding: 12px 16px;
+
+      overflow: hidden;
+
+      border: 1px solid #f8e1e9;
+      border-radius: 20px;
+      background: var(--rosa-banner);
+
+      box-shadow: 0 3px 4px rgba(106, 55, 76, 0.14);
+    }
+
+    .banner-escudo {
+      position: relative;
+      z-index: 2;
+
+      display: grid;
+      flex-shrink: 0;
+      place-items: center;
+
+      width: 40px;
+      height: 40px;
+
+      border-radius: 50%;
+      background: #fbe7ee;
+      color: #6c3d4e;
+    }
+
+    .banner-escudo .icone {
+      width: 25px;
+      height: 25px;
+    }
+
+    .banner-texto {
+      position: relative;
+      z-index: 2;
+    }
+
+    .banner-texto h2 {
+      font-size: 9.5px;
+      line-height: 14px;
+      white-space: nowrap;
+    }
+
+    .banner-texto p {
+      margin-top: 2px;
+      color: #8c6e7b;
+      font-size: 7.2px;
+      white-space: nowrap;
+    }
+
+    .imagem-mulher {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      width: 66px;
+      height: 64px;
+
+      object-fit: cover;
+      object-position: center bottom;
+
+      -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 12%
+      );
+
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 12%
+      );
+    }
+
+    /* Rede de contatos. */
+    .rede {
+      margin-top: 18px;
+    }
+
+    .titulo-linha {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 24px;
+    }
+
+    .titulo-linha h2,
+    .titulo-informativos {
+      color: #653447;
+      font-size: 8px;
+      line-height: 14px;
+    }
+
+    .ver-todas {
+      font-size: 6.5px;
+      font-weight: 700;
+    }
+
+    .contatos {
+      display: flex;
+      gap: 26px;
+
+      margin-top: 6px;
+      padding: 0 7px 3px;
+
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .contatos::-webkit-scrollbar {
+      display: none;
+    }
+
+    .contato {
+      flex: 0 0 47px;
+      text-align: center;
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+
+      width: 47px;
+      height: 47px;
+
+      border: 1px solid #f0e1e7;
+      border-radius: 50%;
+
+      background: #fffdfd;
+      color: #795063;
+      font-size: 23px;
+    }
+
+    .avatar .icone {
+      width: 20px;
+      height: 20px;
+    }
+
+    .avatar--adicionar {
+      background: #e8bdcd;
+    }
+
+    .nome-contato {
+      display: block;
+      margin-top: 6px;
+      font-size: 6.5px;
+      line-height: 10px;
+    }
+
+    /* Notícia com a fotografia da DEAM. */
+    .informativos {
+      margin-top: 28px;
+    }
+
+    .noticia {
+      margin: 12px 9px 0 0;
+      padding: 13px;
+
+      border-radius: 19px;
+      background: #ffffff;
+
+      box-shadow: 0 3px 7px rgba(95, 47, 67, 0.08);
+    }
+
+    .foto-noticia {
+      display: block;
+      width: 100%;
+      height: 105px;
+
+      object-fit: cover;
+      object-position: center;
+
+      border-radius: 11px;
+      background: #e2e7e0;
+    }
+
+    .categoria {
+      display: inline-block;
+
+      margin-top: 8px;
+      padding: 3px 5px;
+
+      border-radius: 5px;
+      background: #f6e6ed;
+      color: #7c3c55;
+
+      font-size: 5.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .noticia h3 {
+      margin-top: 6px;
+      color: #73394f;
+      font-size: 10px;
+      line-height: 13px;
+    }
+
+    /* Navegação inferior. */
+    .menu {
+      position: absolute;
+      z-index: 5;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+
+      height: 61px;
+      padding: 12px 3px;
+
+      border-top: 1px solid #f2e6eb;
+      border-radius: 24px 24px 0 0;
+      background: #f6edf1;
+    }
+
+    .item-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+
+      color: #a08492;
+      font-size: 6.5px;
+    }
+
+    .item-menu .icone {
+      width: 19px;
+      height: 19px;
+    }
+
+    .item-menu.ativo {
+      color: #a3325b;
+      font-weight: 700;
+    }
+
+    .item-menu--sos {
+      position: relative;
+    }
+
+    .sos {
+      position: absolute;
+      top: -23px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      width: 54px;
+      height: 54px;
+
+      border: 5px solid #f0ccda;
+      border-radius: 50%;
+
+      background: var(--rosa-sos);
+      color: #ffffff;
+
+      box-shadow: 0 3px 7px rgba(161, 58, 96, 0.19);
+    }
+
+    .sos .icone {
+      width: 25px;
+      height: 25px;
+    }
+
+    .sos span {
+      font-size: 6px;
+      font-weight: 700;
+    }
+
+    .indicador {
+      position: absolute;
+      z-index: 8;
+      bottom: 5px;
+      left: 50%;
+
+      width: 105px;
+      height: 4px;
+
+      border-radius: 10px;
+      background: #aea2a8;
+
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .aviso {
+      position: absolute;
+      z-index: 10;
+      left: 12px;
+      right: 12px;
+      bottom: 75px;
+
+      padding: 12px;
+
+      border-radius: 12px;
+      background: #ffffff;
+      color: var(--vinho);
+
+      font-size: 11px;
+      line-height: 1.5;
+
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.13);
+    }
+  </style>
+</head>
+
+<body>
+  <svg class="biblioteca-icones" aria-hidden="true">
+    <defs>
+      <symbol id="icone-escudo" viewBox="0 0 24 24">
+        <path
+          d="M12 3 20 6v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-3Z"
+        ></path>
+        <path d="m8.5 11.5 2.3 2.3 4.7-5"></path>
+      </symbol>
+
+      <symbol id="icone-folha" viewBox="0 0 24 24">
+        <path d="M5 4c10 0 15 4 14 13C10 20 4 15 5 4Z"></path>
+        <path d="M6 6c3 5 7 8 14 12"></path>
+        <path d="M8 11c-3-1-5 0-5 2s4 4 8 3"></path>
+      </symbol>
+
+      <symbol id="icone-inicio" viewBox="0 0 24 24">
+        <path d="m3 11 9-8 9 8"></path>
+        <path d="M5.5 9v12H10v-7h4v7h4.5V9"></path>
+      </symbol>
+
+      <symbol id="icone-forum" viewBox="0 0 24 24">
+        <path
+          d="M20 11a8 8 0 0 1-8 8 9 9 0 0 1-4-.9L3 20l1.7-4.4
+          A8 8 0 1 1 20 11Z"
+        ></path>
+      </symbol>
+
+      <symbol id="icone-livro" viewBox="0 0 24 24">
+        <path
+          d="M12 5c-3-2-6-2-10-1v15c4-1 7-1 10 1
+          3-2 6-2 10-1V4c-4-1-7-1-10 1Z"
+        ></path>
+        <path d="M12 5v15"></path>
+      </symbol>
+
+      <symbol id="icone-perfil" viewBox="0 0 24 24">
+        <circle cx="12" cy="7" r="4"></circle>
+        <path d="M4 22v-2a8 8 0 0 1 16 0v2"></path>
+      </symbol>
+    </defs>
+  </svg>
+
+  <main class="palco">
+    <div class="area-celular" id="area-celular">
+      <div class="composicao" id="composicao">
+        <div
+          class="celular"
+          role="group"
+          aria-label="Prévia demonstrativa do aplicativo Zella"
+        >
+          <span
+            class="botao-lateral botao-lateral--silencio"
+            aria-hidden="true"
+          ></span>
+
+          <span
+            class="botao-lateral botao-lateral--volume"
+            aria-hidden="true"
+          ></span>
+
+          <span
+            class="botao-lateral botao-lateral--energia"
+            aria-hidden="true"
+          ></span>
+
+          <div class="tela">
+            <div class="notch" aria-hidden="true">
+              <span class="alto-falante"></span>
+              <span class="camera"></span>
+            </div>
+
+            <div class="barra-status" aria-hidden="true">
+              <span>18:20</span>
+              <span>▂▄▆ ▰</span>
+            </div>
+
+            <div class="conteudo" id="conteudo">
+              <header class="cabecalho">
+                <div class="marca">
+                  <div class="marca-nome">
+                    Zella<span class="marca-brilho" aria-hidden="true">✦</span>
+                  </div>
+
+                  <p class="marca-subtitulo">Seu lugar seguro!</p>
+                </div>
+
+                <button
+                  class="botao-favoritos"
+                  type="button"
+                  aria-label="Favoritos — demonstração"
+                  data-aviso
+                >
+                  ☆
+                </button>
+              </header>
+
+              <h1 class="saudacao">Boa tarde, Gaby!</h1>
+
+              <div class="banner">
+                <div class="banner-escudo" aria-hidden="true">
+                  <svg class="icone">
+                    <use href="#icone-escudo"></use>
+                  </svg>
+                </div>
+
+                <div class="banner-texto">
+                  <h2>Você não está sozinha.</h2>
+                  <p>Estamos aqui para te proteger</p>
+                </div>
+
+                <img
+                  class="imagem-mulher"
+                  src="../images/mulher-acolhimento.png"
+                  alt=""
+                  width="498"
+                  height="540"
+                  decoding="async"
+                >
+              </div>
+
+              <section class="rede" aria-labelledby="titulo-rede">
+                <div class="titulo-linha">
+                  <h2 id="titulo-rede">Minha rede de segurança</h2>
+
+                  <button
+                    class="ver-todas"
+                    type="button"
+                    data-aviso
+                  >
+                    Ver todas
+                  </button>
+                </div>
+
+                <div class="contatos">
+                  <button
+                    class="contato"
+                    type="button"
+                    data-aviso
+                  >
+                    <span class="avatar avatar--adicionar">＋</span>
+                    <span class="nome-contato">Adicionar</span>
+                  </button>
+
+                  <button
+                    class="contato"
+                    type="button"
+                    data-aviso
+                  >
+                    <span class="avatar">
+                      <svg class="icone" aria-hidden="true">
+                        <use href="#icone-folha"></use>
+                      </svg>
+                    </span>
+
+                    <span class="nome-contato">Xuxu</span>
+                  </button>
+
+                  <button
+                    class="contato"
+                    type="button"
+                    data-aviso
+                  >
+                    <span class="avatar">
+                      <svg class="icone" aria-hidden="true">
+                        <use href="#icone-folha"></use>
+                      </svg>
+                    </span>
+
+                    <span class="nome-contato">Yasmin</span>
+                  </button>
+
+                  <button
+                    class="contato"
+                    type="button"
+                    data-aviso
+                  >
+                    <span class="avatar">☆</span>
+                    <span class="nome-contato">Raf</span>
+                  </button>
+                </div>
+              </section>
+
+              <section
+                class="informativos"
+                aria-labelledby="titulo-informativos"
+              >
+                <h2
+                  class="titulo-informativos"
+                  id="titulo-informativos"
+                >
+                  Informativos e Conscientização
+                </h2>
+
+                <article class="noticia">
+                  <img
+                    class="foto-noticia"
+                    src="../images/deam.png"
+                    alt="Fotografia da fachada da DEAM"
+                    width="1128"
+                    height="540"
+                    decoding="async"
+                  >
+
+                  <span class="categoria">Redes de segurança</span>
+
+                  <h3>
+                    Criação da Deam há 40 anos ajudou a articular
+                    rede de proteção à mulher
+                  </h3>
+                </article>
+              </section>
+            </div>
+
+            <nav
+              class="menu"
+              aria-label="Navegação demonstrativa do aplicativo"
+            >
+              <button
+                class="item-menu ativo"
+                id="botao-inicio"
+                type="button"
+                aria-current="page"
+              >
+                <svg class="icone" aria-hidden="true">
+                  <use href="#icone-inicio"></use>
+                </svg>
+
+                <span>Início</span>
+              </button>
+
+              <button
+                class="item-menu"
+                type="button"
+                data-aviso
+              >
+                <svg class="icone" aria-hidden="true">
+                  <use href="#icone-forum"></use>
+                </svg>
+
+                <span>Fórum</span>
+              </button>
+
+              <button
+                class="item-menu item-menu--sos"
+                type="button"
+                aria-label="SOS demonstrativo — não envia alertas"
+                data-aviso
+              >
+                <span class="sos">
+                  <svg class="icone" aria-hidden="true">
+                    <use href="#icone-escudo"></use>
+                  </svg>
+
+                  <span>SOS</span>
+                </span>
+              </button>
+
+              <button
+                class="item-menu"
+                type="button"
+                data-aviso
+              >
+                <svg class="icone" aria-hidden="true">
+                  <use href="#icone-livro"></use>
+                </svg>
+
+                <span>Cuide-se</span>
+              </button>
+
+              <button
+                class="item-menu"
+                type="button"
+                data-aviso
+              >
+                <svg class="icone" aria-hidden="true">
+                  <use href="#icone-perfil"></use>
+                </svg>
+
+                <span>Perfil</span>
+              </button>
+            </nav>
+
+            <div
+              class="aviso"
+              id="aviso"
+              role="status"
+              aria-live="polite"
+              hidden
+            ></div>
+
+            <span class="indicador" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const area = document.querySelector("#area-celular");
+      const composicao = document.querySelector("#composicao");
+      const conteudo = document.querySelector("#conteudo");
+      const aviso = document.querySelector("#aviso");
+      const botaoInicio = document.querySelector("#botao-inicio");
+
+      let temporizadorAviso;
+
+      function ajustarEscala() {
+        if (!area || !composicao) {
+          return;
+        }
+
+        const escala = Math.min(
+          area.getBoundingClientRect().width / 375,
+          1
+        );
+
+        composicao.style.transform = `scale(${escala})`;
+        area.style.height = `${666 * escala}px`;
+      }
+
+      function fecharAviso() {
+        window.clearTimeout(temporizadorAviso);
+
+        if (aviso) {
+          aviso.hidden = true;
+        }
+      }
+
+      function mostrarAviso() {
+        if (!aviso) {
+          return;
+        }
+
+        window.clearTimeout(temporizadorAviso);
+
+        aviso.textContent =
+          "Prévia demonstrativa: nenhum alerta é enviado e nenhum serviço é acionado.";
+
+        aviso.hidden = false;
+
+        temporizadorAviso = window.setTimeout(
+          fecharAviso,
+          4000
+        );
+      }
+
+      document.querySelectorAll("[data-aviso]").forEach(botao => {
+        botao.addEventListener("click", mostrarAviso);
+      });
+
+      botaoInicio?.addEventListener("click", () => {
+        fecharAviso();
+
+        if (conteudo) {
+          conteudo.scrollTop = 0;
+        }
+      });
+
+      document.addEventListener("keydown", evento => {
+        if (evento.key === "Escape") {
+          fecharAviso();
+        }
+      });
+
+      ajustarEscala();
+
+      if (area && "ResizeObserver" in window) {
+        const observador = new ResizeObserver(ajustarEscala);
+        observador.observe(area);
+      }
+
+      window.addEventListener("resize", ajustarEscala);
+    })();
+  </script>
+</body>
+</html>

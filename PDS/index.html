@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zella</title>
+  <meta name="description" content="Zella: uma aplicação de segurança pessoal para mulheres." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+
+  <style>
+    :root,
+    [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --text-3xl: clamp(2.5rem, 1rem + 4vw, 5rem);
+
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+
+
+      --color-bg: #fffbfd;
+      --color-surface: #fff4f8;
+      --color-surface-2: #ffedf4;
+      --color-surface-offset: #ffdbec;
+      --color-border: rgba(69, 2, 24, 0.12);
+      --color-divider: rgba(69, 2, 24, 0.08);
+
+
+      --color-text: #450218;
+      --color-text-muted: #6a1a32;
+      --color-text-faint: #9d5a72;
+      --color-text-inverse: #fff8fb;
+
+
+      --color-primary: #57021e;
+      --color-primary-hover: #450218;
+      --color-primary-soft: #eba8c1;
+      --color-accent: #f46c88;
+      --color-highlight: #ffdbec;
+
+
+      --radius-sm: 0.5rem;
+      --radius-md: 0.875rem;
+      --radius-lg: 1.25rem;
+      --radius-xl: 1.75rem;
+      --radius-full: 9999px;
+
+
+      --shadow-sm: 0 2px 8px rgba(87, 2, 30, 0.06);
+      --shadow-md: 0 12px 32px rgba(87, 2, 30, 0.12);
+      --shadow-lg: 0 24px 64px rgba(87, 2, 30, 0.16);
+
+
+      --content-default: 1120px;
+      --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-body: Manrope, Arial, sans-serif;
+    }
+
+
+    [data-theme="dark"] {
+      --color-bg: #210612;
+      --color-surface: #2a0918;
+      --color-surface-2: #341021;
+      --color-surface-offset: #431126;
+      --color-border: rgba(255, 219, 236, 0.14);
+      --color-divider: rgba(255, 219, 236, 0.08);
+      --color-text: #ffedf4;
+      --color-text-muted: #f1bfd0;
+      --color-text-faint: #d78ca7;
+      --color-text-inverse: #450218;
+      --color-primary: #f46c88;
+      --color-primary-hover: #eba8c1;
+      --color-primary-soft: #57021e;
+      --color-accent: #ffdbec;
+      --color-highlight: #5a2037;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.22);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.28);
+      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.34);
+    }
+
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--color-text);
+      background:
+        radial-gradient(circle at top right, rgba(244, 108, 136, 0.16), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(235, 168, 193, 0.18), transparent 26%),
+        var(--color-bg);
+    }
+
+
+    img,
+    svg,
+    iframe {
+      display: block;
+      max-width: 100%;
+    }
+
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+    button {
+      font: inherit;
+      border: 0;
+      background: none;
+      cursor: pointer;
+    }
+
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+
+
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: var(--space-4);
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-full);
+      z-index: 50;
+    }
+
+
+    .skip-link:focus {
+      left: var(--space-4);
+    }
+
+
+    .container {
+      width: min(calc(100% - 2rem), var(--content-default));
+      margin: 0 auto;
+    }
+
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: color-mix(in srgb, var(--color-bg) 84%, transparent);
+      border-bottom: 1px solid var(--color-divider);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+
+
+    .site-header.scrolled {
+      background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+      box-shadow: var(--shadow-sm);
+    }
+
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      min-height: 84px;
+      transition: min-height var(--transition);
+    }
+
+
+    .site-header.scrolled .header-inner {
+      min-height: 68px;
+    }
+
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      transition: width var(--transition), height var(--transition);
+    }
+
+
+    .site-header.scrolled .brand-mark {
+      width: 36px;
+      height: 36px;
+    }
+
+
+    .brand-name {
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+    }
+
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+    }
+
+
+    .nav a {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      position: relative;
+      transition: color var(--transition);
+    }
+
+
+    .site-header.scrolled .nav a {
+      color: var(--color-text);
+    }
+
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.35rem;
+      width: 100%;
+      height: 1px;
+      background: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+
+
+    .nav a:hover::after,
+    .nav a:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+
+    .theme-toggle,
+    .menu-toggle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      transition: transform var(--transition), background var(--transition);
+    }
+
+
+    .theme-toggle:hover,
+    .menu-toggle:hover {
+      transform: translateY(-2px);
+      background: var(--color-surface-2);
+    }
+
+
+    .menu-toggle {
+      display: none;
+    }
+
+
+    .theme-toggle__icon {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      pointer-events: none;
+      display: block;
+    }
+
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: 48px;
+      padding: 0 var(--space-5);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      transition: transform var(--transition), background var(--transition), color var(--transition);
+    }
+
+
+    .button-primary {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      box-shadow: var(--shadow-sm);
+    }
+
+
+    .button-primary:hover {
+      background: var(--color-primary-hover);
+      transform: translateY(-2px);
+    }
+
+
+    .button-secondary {
+      background: transparent;
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+    }
+
+
+    .button-secondary:hover {
+      background: var(--color-surface);
+    }
+
+
+    main section {
+      padding-block: clamp(var(--space-16), 9vw, var(--space-24));
+    }
+
+
+  .cards-showcase {
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+    }
+
+
+    .hero {
+      min-height: auto;
+      display: flex;
+      align-items: flex-start;
+      padding-top: var(--space-8);
+    }
+
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: start;
+      gap: clamp(var(--space-8), 5vw, var(--space-16));
+      min-height: auto;
+    }
+
+
+    .hero-logo-side {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 520px;
+      position: relative;
+    }
+
+
+    .hero-logo-side::before {
+      content: "";
+      position: absolute;
+      inset: 10% 8%;
+      background: radial-gradient(circle, rgba(244, 108, 136, 0.12), transparent 68%);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+
+
+    .hero-logo-large {
+      position: relative;
+      width: min(430px, 82%);
+      height: auto;
+      object-fit: contain;
+      filter: brightness(1.15) contrast(1.05) drop-shadow(0 0 24px rgba(244, 108, 136, 0.10));
+    }
+
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-full);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: var(--space-5);
+    }
+
+
+    h1,
+    h2 {
+      font-family: var(--font-display);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+    }
+
+
+    h1 {
+      font-size: clamp(3.2rem, 7vw, 6.4rem);
+    }
+
+
+    h2 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-5);
+    }
+
+
+    .hero p {
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      max-width: 58ch;
+      margin-top: var(--space-5);
+    }
+
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-8);
+    }
+
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-3);
+      margin-top: var(--space-10);
+    }
+
+
+    .stat {
+      padding: var(--space-4);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+
+    .stat strong {
+      display: block;
+      font-size: var(--text-lg);
+      font-family: var(--font-display);
+      margin-bottom: 0.25rem;
+    }
+
+
+    .stat span {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+
+    .hero-card {
+      position: relative;
+      padding: var(--space-6);
+      border-radius: 32px;
+      background: linear-gradient(180deg, var(--color-surface), color-mix(in srgb, var(--color-surface) 72%, var(--color-highlight)));
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+      min-height: 560px;
+      display: grid;
+      align-content: space-between;
+      overflow: hidden;
+    }
+
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -10px -20px 20px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(244, 108, 136, 0.24), transparent 60%);
+      pointer-events: none;
+    }
+
+
+    .phone-shell {
+      margin-inline: auto;
+      width: min(320px, 100%);
+      border-radius: 36px;
+      padding: 12px;
+      background: #5a3d46;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), var(--shadow-md);
+    }
+
+
+    .phone-screen {
+      background: linear-gradient(180deg, #fffafc 0%, #f7eef2 100%);
+      border-radius: 28px;
+      padding: var(--space-4);
+      min-height: 470px;
+      display: grid;
+      gap: var(--space-4);
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .phone-screen::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(69, 2, 24, 0.16);
+    }
+
+
+    .phone-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #231b1a;
+      font-size: var(--text-xs);
+    }
+
+
+    .phone-dynamic {
+      width: 72px;
+      height: 22px;
+      border-radius: 999px;
+      background: #111;
+    }
+
+
+    .phone-headline {
+      display: grid;
+      gap: 0.25rem;
+      margin-top: 0.25rem;
+    }
+
+
+    .phone-headline h3 {
+      font-size: 2rem;
+      font-family: var(--font-display);
+      line-height: 1;
+    }
+
+
+    .phone-headline p {
+      color: #8b8b8b;
+      font-size: 0.85rem;
+    }
+
+
+    .phone-feature {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 18px;
+      padding: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+
+    .phone-feature strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.98rem;
+      color: #222;
+    }
+
+
+    .phone-feature p {
+      font-size: 0.88rem;
+      color: #6a625f;
+    }
+
+
+    .app-showcase {
+      padding-top: clamp(4rem, 8vw, 7rem);
+      padding-bottom: clamp(4rem, 8vw, 7rem);
+    }
+
+
+    .app-showcase__header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+    }
+
+
+    .app-showcase__header h2 {
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 0.95;
+      margin-bottom: 1rem;
+    }
+
+
+    .app-showcase__header p {
+      color: var(--color-text-muted);
+      font-size: var(--text-base);
+    }
+
+
+    .app-showcase__grid {
+      display: grid;
+      grid-template-columns: 1fr 340px 1fr;
+      grid-template-rows: auto auto;
+      gap: 2rem 2.5rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+
+    .app-phone {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    .app-phone-frame {
+      width: 330px;
+      height: 662px;
+      border: 0;
+      background: transparent;
+      border-radius: 39px;
+      display: block;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(69, 2, 24, 0.18);
+    }
+
+
+    .app-card {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      max-width: 290px;
+      padding: 1.25rem;
+      border-radius: 22px;
+      background: #ffffff;
+      border: 1px solid rgba(69, 2, 24, 0.08);
+      box-shadow: 0 14px 40px rgba(69, 2, 24, 0.06);
+    }
+
+
+    .app-card h3 {
+      font-size: 1rem;
+      line-height: 1.15;
+      margin-bottom: 0.45rem;
+      color: #450218;
+    }
+
+
+    .app-card p {
+      font-size: 0.88rem;
+      color: #6a1a32;
+    }
+
+
+    .app-card__icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 34px;
+      background: #ffdbec;
+      color: #8a2149;
+    }
+
+
+    .app-card__icon svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
+
+    .app-card--accent {
+      border-color: rgba(192, 125, 117, 0.38);
+    }
+
+
+    .app-card--left-top {
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: end;
+    }
+
+
+    .app-card--right-top {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: start;
+    }
+
+
+    .app-card--left-bottom {
+      grid-column: 1;
+      grid-row: 2;
+      justify-self: end;
+    }
+
+
+    .app-card--right-bottom {
+      grid-column: 3;
+      grid-row: 2;
+      justify-self: start;
+    }
+
+
+    .section-intro {
+      display: grid;
+      gap: var(--space-4);
+      margin-bottom: var(--space-10);
+      max-width: 72ch;
+    }
+
+
+    .section-intro p {
+      color: var(--color-text-muted);
+    }
+
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--space-6);
+    }
+
+
+    .feature-card {
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+
+    .feature-card.large {
+      display: grid;
+      gap: var(--space-6);
+      background: linear-gradient(180deg, var(--color-surface), var(--color-surface-2));
+    }
+
+
+    .feature-card h3,
+    .story-card h3,
+    .support-card h3 {
+      font-size: var(--text-xl);
+      font-family: var(--font-display);
+      line-height: 1;
+      margin-bottom: var(--space-3);
+    }
+
+
+    .feature-card p,
+    .story-card p,
+    .support-card p,
+    .cta-box p {
+      color: var(--color-text-muted);
+    }
+
+
+    .soft-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+
+    .soft-list span {
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      background: var(--color-highlight);
+      color: var(--color-primary);
+      border: 1px solid rgba(87, 2, 30, 0.08);
+    }
+
+
+    .feature-side {
+      display: grid;
+      gap: var(--space-6);
+    }
+
+
+    .story-layout {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+
+.quote-panel {
+  padding: var(--space-8);
+  border-radius: 28px;
+  box-shadow: var(--shadow-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: (var(--color-highlight));
+  position: sticky;
+  top: 110px;
+}
+
+
+.quote-panel p {
+  font-size: clamp(1.6rem, 2vw, 2.2rem);
+  line-height: 1.2;
+  color: (var(--color-highlight));
+  max-width: 14ch;
+}
+
+
+.story-stack {
+  display: grid;
+  gap: var(--space-4);
+}
+
+
+.story-card {
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+}
+
+
+.story-card h3 {
+  font-size: clamp(1.8rem, 2.2vw, 2.6rem);
+  line-height: 1; 
+  margin-bottom: var(--space-3);
+}
+
+
+.story-card p {
+  color: (var(--color-highlight));
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 34ch;
+}
+
+
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+
+    .number-box {
+      padding: var(--space-6);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+    }
+
+
+    .number-box strong {
+      display: block;
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-family: var(--font-display);
+      margin-bottom: 0.35rem;
+    }
+
+
+    .number-box span {
+      color: var(--color-text-muted);
+    }
+
+
+    .cta-box {
+      padding: clamp(var(--space-8), 5vw, var(--space-12));
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-6);
+      align-items: center;
+      background: linear-gradient(135deg, var(--color-surface-2), var(--color-highlight));
+      box-shadow: var(--shadow-md);
+      border-radius: 32px;
+    }
+
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+
+    .support-card {
+      padding: var(--space-6);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+
+    .support-card ul {
+      list-style: none;
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+    }
+
+
+    .support-card li {
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-divider);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+
+    .site-footer {
+      padding: var(--space-8) 0 var(--space-10);
+      border-top: 1px solid var(--color-divider);
+      color: var(--color-text-muted);
+    }
+
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+
+    [data-reveal].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    @media (max-width: 980px) {
+
+
+      .hero-grid,
+      .features-grid,
+      .story-layout,
+      .cta-box,
+      .app-showcase__grid {
+        grid-template-columns: 1fr;
+      }
+
+
+      .hero-grid {
+        min-height: auto;
+      }
+
+
+      .hero-logo-side {
+        min-height: auto;
+        margin-top: var(--space-6);
+      }
+
+
+      .hero-logo-large {
+        width: min(220px, 60%);
+        opacity: 0.12;
+      }
+
+
+      .quote-panel {
+        position: static;
+      }
+
+
+      .numbers-grid,
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+
+
+      .hero-card {
+        min-height: auto;
+      }
+
+
+      .app-phone {
+        grid-column: auto;
+        grid-row: auto;
+        order: -1;
+      }
+
+
+      .app-card {
+        max-width: 100%;
+        justify-self: stretch;
+      }
+
+
+      .app-card--left-top,
+      .app-card--right-top,
+      .app-card--left-bottom,
+      .app-card--right-bottom {
+        grid-column: auto;
+        grid-row: auto;
+        justify-self: stretch;
+      }
+    }
+
+
+    @media (max-width: 760px) {
+      .nav {
+        position: absolute;
+        left: 1rem;
+        right: 1rem;
+        top: calc(100% + 0.75rem);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--space-5);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        display: none;
+      }
+
+
+      .nav.open {
+        display: flex;
+      }
+
+
+      .menu-toggle {
+        display: inline-grid;
+      }
+
+
+      .header-actions .button {
+        display: none;
+      }
+
+
+      h1 {
+        max-width: 10ch;
+      }
+
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+
+      .app-phone-frame {
+        width: min(100%, 320px);
+        height: 640px;
+      }
+
+
+      .app-showcase__header h2 {
+        font-size: clamp(1.8rem, 8vw, 2.6rem);
+      }
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+
+      *,
+      ::before,
+      ::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+
+    .dev-page {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: var(--space-8);
+    }
+
+
+    .dev-card {
+      width: min(100%, 560px);
+      padding: clamp(var(--space-8), 6vw, var(--space-12));
+      border-radius: 32px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+    }
+
+
+    .dev-card h1 {
+      max-width: none;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+    }
+
+
+    .dev-card p {
+      margin-top: var(--space-4);
+      color: var(--color-text-muted);
+      font-size: var(--text-lg);
+    }
+  </style>
+</head>
+
+
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a class="brand" href="#inicio" aria-label="Voltar ao início">
+          <img class="brand-mark" src="./images/icons/logo.png" alt="Logo da Zella" />
+          <span class="brand-name">Zella</span>
+        </a>
+
+
+        <nav class="nav" id="menu" aria-label="Principal">
+          <a href="#inicio">Início</a>
+          <a href="#app-showcase">App</a>
+          <a href="#produto">Produto</a>
+          <!-- <a href="#contato">Contato</a> -->
+        </nav>
+
+
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Alternar tema">
+            <img class="theme-toggle__icon" src="./images/icons/lua.png" alt="" aria-hidden="true">
+          </button>
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 6h18M3 12h18M3 18h18"></path>
+            </svg>
+          </button>
+          <a class="button button-primary" href="https://expo.dev/artifacts/eas/S7ke-C9u-pVEd5wlpU-LScNYFbZMWcYenXWWYoVflw4.apk">Instalar app</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <main id="conteudo">
+<section class="hero" id="inicio">
+  <div class="container">
+    <div class="hero-grid">
+      <div data-reveal>
+        <h1>Zella</h1>
+        <h1>Segurança pessoal com discrição.</h1>
+        <p>Zella é um dispositivo de segurança pessoal pensado para mulheres que querem mais autonomia no dia a dia,
+          com presença discreta e acesso rápido.</p>
+
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#app-showcase">App</a>
+          <a class="button button-secondary" href="#produto">Entender o produto</a>
+        </div>
+      </div>
+
+
+      <div class="hero-logo-side" data-reveal>
+        <img src="./images/icons/logo.png" alt="Logo da Zella" class="hero-logo-large" />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <section class="cards-showcase" id="cards-showcase">
+  <div class="container">
+    <div class="hero-stats" aria-label="Pontos principais do produto">
+      <article class="stat">
+        <strong>Discreto</strong>
+        <span>Integrado à rotina sem excesso de exposição.</span>
+      </article>
+      <article class="stat">
+        <strong>Rápido</strong>
+        <span>Fácil de acessar e acionar.</span>
+      </article>
+      <article class="stat">
+        <strong>Confiável</strong>
+        <span>Prático para o uso cotidiano.</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+    <section class="app-showcase" id="app-showcase">
+      <div class="container">
+        <div class="app-showcase__header" data-reveal>
+          <h2>Sua vida de proteção diária em um só lugar.</h2>
+          <p>No Zella, você encontra:</p>
+        </div>
+
+
+        <div class="app-showcase__grid">
+          <article class="app-card app-card--left-top" data-reveal>
+            <div class="app-card__icon" aria-hidden="true">
+              <svg width="23" height="23" viewBox="0 0 24 24" fill="none">
+                <path d="M8 10.8a2.9 2.9 0 1 0 0-5.8 2.9 2.9 0 0 0 0 5.8Zm8 0a2.9 2.9 0 1 0 0-5.8 2.9 2.9 0 0 0 0 5.8Z"
+                  fill="currentColor" />
+                <path
+                  d="M3.5 18.3c0-2.3 2.2-3.9 4.7-3.9 2.4 0 4.6 1.6 4.6 3.9v.5H3.5v-.5Zm7.4.5c.2-1.9 1.9-3.4 4.2-3.4 2.2 0 4.1 1.4 4.9 3.4h-9.1Z"
+                  fill="currentColor" />
+              </svg>
+            </div>
+            <div>
+              <h3>Contatos de confiança</h3>
+              <p>Adicione pessoas importantes para serem avisadas rapidamente quando você precisar.</p>
+            </div>
+          </article>
+
+
+          <article class="app-card app-card--right-top app-card--accent" data-reveal>
+            <div class="app-card__icon" aria-hidden="true">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 20.2S5.6 16.1 5.6 11.3c0-2 1.6-3.6 3.6-3.6 1.1 0 2.2.5 2.8 1.4.6-.9 1.7-1.4 2.8-1.4 2 0 3.6 1.6 3.6 3.6 0 4.8-6.4 8.9-6.4 8.9Z"
+                  fill="currentColor" />
+              </svg>
+            </div>
+            <div>
+              <h3>Rede de Apoio</h3>
+              <p>Encontre suporte em momentos difíceis com acesso rápido a uma rede de cuidado.</p>
+            </div>
+          </article>
+
+
+          <div class="app-phone" data-reveal>
+            <iframe class="app-phone-frame" src="./typeScript/tela_inicial.html" title="Mockup do aplicativo Zella"
+              loading="lazy"></iframe>
+          </div>
+
+
+          <article class="app-card app-card--left-bottom" data-reveal>
+            <div class="app-card__icon" aria-hidden="true">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M4.7 6.6c0-1 .8-1.8 1.8-1.8h4.2c.8 0 1.5.3 2 .7.5-.4 1.2-.7 2-.7h3.6c1 0 1.8.8 1.8 1.8v10.9c0 .4-.3.6-.7.4-1-.5-2-.7-3.1-.7H15c-.8 0-1.6.2-2.3.7-.7-.5-1.5-.7-2.3-.7H8c-1.1 0-2.2.2-3.1.7-.4.2-.7 0-.7-.4V6.6Z"
+                  stroke="#8a2149" stroke-width="1.55" />
+                <path d="M12.6 5.2v11.5" stroke="#8a2149" stroke-width="1.55" />
+              </svg>
+            </div>
+            <div>
+              <h3>Notícias</h3>
+              <p>Acompanhe conteúdos relevantes para se informar, se prevenir e tomar decisões com mais segurança.</p>
+            </div>
+          </article>
+
+
+          <article class="app-card app-card--right-bottom" data-reveal>
+            <div class="app-card__icon" aria-hidden="true">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 5.3c-3.6 0-6.5 2.4-6.5 5.5 0 1.7.8 3.1 2.2 4l-.7 2.9 2.7-1.5c.7.2 1.4.3 2.3.3 3.6 0 6.5-2.4 6.5-5.5S15.6 5.3 12 5.3Z"
+                  stroke="#8a2149" stroke-width="1.55" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div>
+              <h3>Fórum</h3>
+              <p>Compartilhe experiências, tire dúvidas e encontre orientação em uma comunidade de apoio.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="produto">
+      <div class="container">
+        <div class="section-intro" data-reveal>
+          <!-- <span class="eyebrow">Posicionamento</span> -->
+          <h2>Segurança pessoal que faz parte da sua rotina.</h2>
+          <p>A Zella foi pensada para mulheres que querem mais autonomia no deslocamento, na rotina noturna e em
+            situações de vulnerabilidade.</p>
+        </div>
+
+
+        <div class="features-grid">
+          <article class="feature-card large" data-reveal>
+            <h3>Mensagem central da Zella</h3>
+            <p>Zella é uma aplicação de segurança pessoal para mulheres que querem se sentir mais seguras no dia a dia:
+              ao voltar para casa à noite ou se deslocar sozinhas. A comunicação fala de proteção, liberdade e preparo.
+            </p>
+          </article>
+
+
+          <div class="feature-side">
+            <article class="feature-card" data-reveal>
+              <h3>Tom de voz</h3>
+              <p>Firme, mas sensível. Protetor, mas não alarmista. Reforça autonomia e acolhimento.</p>
+            </article>
+
+
+            <article class="feature-card" data-reveal>
+              <div class="soft-list">
+                <span>Proteção discreta</span>
+                <span>Autonomia</span>
+                <span>Resposta rápida</span>
+                <span>Uso intuitivo</span>
+                <span>Praticidade</span>
+                <span>Simplicidade</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="como-funciona">
+      <div class="container">
+        <div class="story-layout">
+          <aside class="quote-panel" data-reveal>
+            <p>Proteção de verdade é aquela que acompanha a vida sem pesar.</p>
+          </aside>
+
+
+          <div class="story-stack">
+            <article class="story-card" data-reveal>
+              <h3>1. Fácil de carregar</h3>
+              <p>Um chaveiro prático, discreto e sempre à mão, ele se integra naturalmente à rotina, seguindo a lógica
+                de objetos pessoais que estão sempre por perto.</p>
+            </article>
+
+
+            <article class="story-card" data-reveal>
+              <h3>2. Fácil de ativar</h3>
+              <p>Itens de segurança pessoal tendem a comunicar simplicidade de uso em momentos de tensão, com acesso
+                rápido e pouca complexidade.</p>
+            </article>
+
+
+            <article class="story-card" data-reveal>
+              <h3>3. Fácil de confiar</h3>
+              <p>A combinação de uma identidade delicada com uma estrutura simples torna a Zella próxima, clara e fácil
+                de entender, transmitindo confiança sem abrir mão da sua personalidade.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!--
+    <section id="diferenciais">
+      <div class="container">
+        <div class="section-intro" data-reveal>
+          <span class="eyebrow">Estrutura sugerida</span>
+          <h2>O que a página precisa destacar.</h2>
+          <p>Como a Zella apresenta um dispositivo de segurança pessoal para mulheres, a página deve reforçar discrição,
+            usabilidade, portabilidade e sensação de amparo.</p>
+        </div>
+
+
+        <div class="numbers-grid">
+          <article class="number-box" data-reveal><strong>Produto</strong><span>Mostrar o objeto, sua proposta e o contexto de uso.</span></article>
+          <article class="number-box" data-reveal><strong>Função</strong><span>Explicar como ele age e como é acionado.</span></article>
+          <article class="number-box" data-reveal><strong>Confiança</strong><span>Usar linguagem objetiva, prova social e FAQ.</span></article>
+          <article class="number-box" data-reveal><strong>Conversão</strong><span>Encaminhar para lista, compra, contato ou lançamento.</span></article>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="contato">
+      <div class="container">
+        <div class="cta-box" data-reveal>
+          <div>
+            <h3>Agora a Zella recupera o layout mais claro que você preferia.</h3>
+            <p>Eu mantive a base do design anterior e só acrescentei a identidade da marca de forma sutil, com símbolo no topo, hero ajustado e tom visual mais coerente com a imagem enviada.</p>
+          </div>
+          <a class="button button-primary" href="mailto:contato@zella.com">Avançar com o conteúdo final</a>
+        </div>
+
+
+        <div class="support-grid">
+          <article class="support-card" data-reveal>
+            <h3>O que foi mantido</h3>
+            <ul>
+              <li>Estrutura mais limpa e fácil de entender.</li>
+              <li>Blocos bem definidos e hero direto.</li>
+              <li>Tom comercial mais claro e objetivo.</li>
+            </ul>
+          </article>
+
+
+          <article class="support-card" data-reveal>
+            <h3>O que foi ajustado</h3>
+            <ul>
+              <li>Nome Zella aplicado à marca.</li>
+              <li>Símbolo incorporado de forma leve na interface.</li>
+              <li>Tipografia e cores refinadas sem mudar a base.</li>
+            </ul>
+          </article>
+
+
+          <article class="support-card" data-reveal>
+            <h3>Próximo passo</h3>
+            <ul>
+              <li>Definir o formato real do dispositivo.</li>
+              <li>Explicar exatamente o que ele faz.</li>
+              <li>Escolher o CTA final da página.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+    -->
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p>Zella: segurança pessoal.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.querySelector('[data-theme-toggle]');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let theme = prefersDark ? 'dark' : 'light';
+
+
+    root.setAttribute('data-theme', theme);
+
+
+    function setIcon() {
+      const icon = toggle.querySelector('.theme-toggle__icon');
+      if (!icon) return;
+      icon.src = theme === 'dark' ? './images/icons/sol.png' : './images/icons/lua.png';
+      toggle.setAttribute('aria-label', theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro');
+    }
+
+
+    setIcon();
+
+
+    toggle.addEventListener('click', () => {
+      theme = theme === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', theme);
+      setIcon();
+    });
+
+
+    const menuButton = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.nav');
+
+
+    menuButton.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(open));
+    });
+
+
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+
+    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+
+    const header = document.querySelector('.site-header');
+
+
+    function handleHeaderScroll() {
+      header.classList.toggle('scrolled', window.scrollY > 80);
+    }
+
+
+    window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+    handleHeaderScroll();
+  </script>
+</body>
+
+
+</html>
